@@ -15,6 +15,6 @@ module.exports = function (app) {
         connection.end();
 
         // res.send('<html>Listando...</html>');
-        res.render('produtos/lista');
+        // res.render('produtos/lista');
     })
 }
