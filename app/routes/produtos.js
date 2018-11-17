@@ -1,20 +1,30 @@
 module.exports = function (app) {
+    var connection = {};
+    var produtosDAO = {};
+    console.log('ROTA PRODUTO OK');
 
     app.get('/produtos', function (req, res) {
-        var mysql = require('mysql');
-        var connection = mysql.createConnection({
-            host: 'localhost',
-            user:  'root',
-            password: '',
-            database: 'casadocodigo_nodejs'
-        });
+        connection = app.infra.connectionFactory();
+        produtosDAO = new app.infra.produtosDAO(connection);
 
-        connection.query('select * from livros',function (err,results) {
-            res.send(results);
+        produtosDAO.lista(function (erros, resultados) {
+            if (erros)
+                res.send(erros);
+            res.send(resultados);
         });
         connection.end();
+    });
 
-        // res.send('<html>Listando...</html>');
-        // res.render('produtos/lista');
-    })
+    app.post('/produtos', function (req, res) {
+        connection = app.infra.connectionFactory();
+        produtosDAO = app.infra.produtosDAO(connection);
+        produtosDAO.createProdutoModel(req.body);
+
+        produtosDAO.insert(connection, request, function (erros, resultados) {
+            console.log(req);
+            res.send(req);
+        });
+
+        connection.end();
+    });
 }
