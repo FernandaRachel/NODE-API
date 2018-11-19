@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var load = require('express-load');
-
+var expressValidator = require('express-validator');
 module.exports = function () {
     var app = express();
 
@@ -12,6 +12,7 @@ module.exports = function () {
     app.use(bodyParser.urlencoded({
         extended: true
     }));
+    app.use(expressValidator());
 
     // -- Configuring express
     app.set('view engine', 'ejs');
@@ -22,6 +23,7 @@ module.exports = function () {
             cwd: 'app'
         })
         .then('infra')
+        .then('validation')
         .into(app);
 
     return app;
