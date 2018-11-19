@@ -11,11 +11,6 @@ module.exports = function (app) {
             if (erros) res.send(erros);
             else {
                 res.format({
-                    //   html: function() {
-                    //     res.render("produtos/lista", {
-                    //       lista: resultados
-                    //     });
-                    //   },
                     json: function () {
                         res.json(resultados);
                     }
@@ -28,16 +23,12 @@ module.exports = function (app) {
     app.get("/produtos/(:id)", function (req, res) {
         connection = app.infra.connectionFactory();
         productsDAO = new app.infra.productsDAO(connection);
-
-        productsDAO.getById(req.params.id, function (erros, resultados) {
+        var id = '';
+        if (req.params.id) id = req.params.id;
+        productsDAO.getById(id, function (erros, resultados) {
             if (erros) res.send(erros);
             else {
                 res.format({
-                    //   html: function() {
-                    //     res.render("produtos/lista", {
-                    //       lista: resultados
-                    //     });
-                    //   },
                     json: function () {
                         res.json(resultados);
                     }
@@ -47,6 +38,45 @@ module.exports = function (app) {
         connection.end();
     });
 
+    app.get("/produtos/titulo/(:titulo)", function (req, res) {
+        connection = app.infra.connectionFactory();
+        productsDAO = new app.infra.productsDAO(connection);
+        var title = '';
+        if (req.params.titulo) title = req.params.titulo.toString();
+        console.log(title);
+        
+        productsDAO.getByTitle(title, function (erros, resultados) {
+            if (erros) res.send(erros);
+            else {
+                res.format({
+                    json: function () {
+                        res.json(resultados);
+                    }
+                });
+            }
+        });
+        connection.end();
+    });
+    
+    app.get("/produtos/price/(:price)", function (req, res) {
+        connection = app.infra.connectionFactory();
+        productsDAO = new app.infra.productsDAO(connection);
+        var price = '';
+        if (req.params.price) price = req.params.price;
+        console.log(price);
+        
+        productsDAO.getByPrice(price, function (erros, resultados) {
+            if (erros) res.send(erros);
+            else {
+                res.format({
+                    json: function () {
+                        res.json(resultados);
+                    }
+                });
+            }
+        });
+        connection.end();
+    });
 
     app.post("/produtos", function (req, res) {
         connection = app.infra.connectionFactory();
