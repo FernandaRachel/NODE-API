@@ -1,0 +1,29 @@
+<html>
+
+<body>
+    <form action="/promocoes" method="post" class="form-control">
+        <div>
+            <input class="form-control" type="text" name="mensagem" />
+        </div>
+        <div>
+            <select class="form-control" name="livro[id]">
+                <% for(var i=0; i<lista.length; i++) {%>
+                <option value="<%=lista[i].id%>">
+                    <%=lista[i].titulo%>
+                </option>
+                <% } %>
+            </select>
+        </div>
+        <input class="form-group" type="submit" value="Promoção relâmpago" />
+
+    </form>
+
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io();
+    socket.on('novaPromocao', function (data) {
+        alert("Livro em promocao " + data.livro.id)
+    });
+</script>
+</html>

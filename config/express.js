@@ -13,6 +13,7 @@ module.exports = function () {
         extended: true
     }));
     app.use(expressValidator());
+    app.use(express.static('./app/public'));
 
     // -- Configuring express
     app.set('view engine', 'ejs');

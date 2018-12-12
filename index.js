@@ -1,6 +1,9 @@
 var app = require('./config/express')();
-var rotas = require('./app/routes/produtos')(app);
+var http = require('http').Server(app);
+var socketIo = require('socket.io')(http);
 
-app.listen(3000, function () {
+app.set('io', socketIo);
+
+http.listen(3000, function () {
     console.log("Servidor rodando");
 })

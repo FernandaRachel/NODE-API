@@ -3,7 +3,7 @@ module.exports = function (app) {
     var productsDAO = {};
     console.log("ROTA PRODUTO OK");
 
-    app.get("/produtos", function (req, res) {
+    app.get("/produtos/", function (req, res) {
         connection = app.infra.connectionFactory();
         productsDAO = new app.infra.productsDAO(connection);
 
@@ -13,6 +13,11 @@ module.exports = function (app) {
                 res.format({
                     json: function () {
                         res.json(resultados);
+                    },
+                    html: function () {
+                        res.render('produtos/lista', {
+                            lista: resultados
+                        });
                     }
                 });
             }
@@ -31,11 +36,16 @@ module.exports = function (app) {
                 res.format({
                     json: function () {
                         res.json(resultados);
+                    },
+                    html: function () {
+                        res.render('produtos/lista', {
+                            lista: resultados
+                        });
                     }
                 });
+                connection.end();
             }
         });
-        connection.end();
     });
 
     app.get("/produtos/titulo/(:titulo)", function (req, res) {
@@ -44,7 +54,7 @@ module.exports = function (app) {
         var title = '';
         if (req.params.titulo) title = req.params.titulo.toString();
         console.log(title);
-        
+
         productsDAO.getByTitle(title, function (erros, resultados) {
             if (erros) res.send(erros);
             else {
@@ -57,14 +67,14 @@ module.exports = function (app) {
         });
         connection.end();
     });
-    
+
     app.get("/produtos/price/(:price)", function (req, res) {
         connection = app.infra.connectionFactory();
         productsDAO = new app.infra.productsDAO(connection);
         var price = '';
         if (req.params.price) price = req.params.price;
         console.log(price);
-        
+
         productsDAO.getByPrice(price, function (erros, resultados) {
             if (erros) res.send(erros);
             else {
@@ -76,6 +86,13 @@ module.exports = function (app) {
             }
         });
         connection.end();
+    });
+
+    app.get('/produtos/form', function (req, res) {
+        res.render('produtos/form', {
+            errosValidacao: {},
+            produto: {}
+        });
     });
 
     app.post("/produtos", function (req, res) {
