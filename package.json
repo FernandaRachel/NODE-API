@@ -4,7 +4,11 @@
   "description": "primeira api completa em node com express",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "engines": {
+    "node": "^8.12.0"
   },
   "author": "Fernanda Rachel",
   "license": "ISC",
