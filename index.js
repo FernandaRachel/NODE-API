@@ -1,4 +1,4 @@
-var app = require('./config/express')();
+var app = require('./app/config/express')();
 var http = require('http').Server(app);
 var socketIo = require('socket.io')(http);
 
@@ -13,8 +13,8 @@ app.set('io', socketIo);
 var porta = process.env.PORT || 3000;
 var server = http.listen(porta, function () {
 
-    var host = server.address().address;
+    // var host = server.address().address.length == 0 ? host = 'localhost' : '';
     var port = server.address().port;
 
-    console.log('Example app listening at http://%s:%s', host, port);
+    console.log('Example app listening at http://%s:%s', 'localhost', port);
 });
