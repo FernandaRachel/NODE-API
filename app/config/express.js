@@ -24,7 +24,7 @@ module.exports = function () {
     load('routes', {
             cwd: 'app'
         })
-        .then('infra')
+        .then('db')
         .then('validation')
         .into(app);
 

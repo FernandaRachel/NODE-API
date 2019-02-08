@@ -4,8 +4,8 @@ module.exports = function (app) {
     console.log("ROTA PRODUTO OK");
 
     app.get("/produtos/", function (req, res) {
-        connection = app.infra.connectionFactory();
-        productsDAO = new app.infra.productsDAO(connection);
+        connection = app.db.connectionFactory();
+        productsDAO = new app.db.dao.productsDAO(connection);
 
         productsDAO.get(function (erros, resultados) {
             if (erros) res.send(erros);
@@ -26,8 +26,8 @@ module.exports = function (app) {
     });
 
     app.get("/produtos/(:id)", function (req, res) {
-        connection = app.infra.connectionFactory();
-        productsDAO = new app.infra.productsDAO(connection);
+        connection = app.db.connectionFactory();
+        productsDAO = new app.db.dao.productsDAO(connection);
         var id = '';
         if (req.params.id) id = req.params.id;
         productsDAO.getById(id, function (erros, resultados) {
@@ -49,8 +49,8 @@ module.exports = function (app) {
     });
 
     app.get("/produtos/titulo/(:titulo)", function (req, res) {
-        connection = app.infra.connectionFactory();
-        productsDAO = new app.infra.productsDAO(connection);
+        connection = app.db.connectionFactory();
+        productsDAO = new app.db.dao.productsDAO(connection);
         var title = '';
         if (req.params.titulo) title = req.params.titulo.toString();
         console.log(title);
@@ -69,8 +69,8 @@ module.exports = function (app) {
     });
 
     app.get("/produtos/price/(:price)", function (req, res) {
-        connection = app.infra.connectionFactory();
-        productsDAO = new app.infra.productsDAO(connection);
+        connection = app.db.connectionFactory();
+        productsDAO = new app.db.dao.productsDAO(connection);
         var price = '';
         if (req.params.price) price = req.params.price;
         console.log(price);
@@ -96,8 +96,8 @@ module.exports = function (app) {
     });
 
     app.post("/produtos", function (req, res) {
-        connection = app.infra.connectionFactory();
-        productsDAO = new app.infra.productsDAO(connection);
+        connection = app.db.connectionFactory();
+        productsDAO = new app.db.dao.productsDAO(connection);
         var errors = app.validation.productsValidation(req);
 
         if (errors) {
@@ -117,8 +117,8 @@ module.exports = function (app) {
     });
 
     app.put("/produtos/(:id)", function (req, res) {
-        connection = app.infra.connectionFactory();
-        productsDAO = new app.infra.productsDAO(connection);
+        connection = app.db.connectionFactory();
+        productsDAO = new app.db.dao.productsDAO(connection);
         var errors = app.validation.productsValidation(req);
 
         if (errors) {
@@ -140,8 +140,8 @@ module.exports = function (app) {
     });
 
     app.delete("/produtos/(:id)", function (req, res) {
-        connection = app.infra.connectionFactory();
-        productsDAO = new app.infra.productsDAO(connection);
+        connection = app.db.connectionFactory();
+        productsDAO = new app.db.dao.productsDAO(connection);
         console.log(req.params);
 
         productsDAO.delete(req.params.id, function (erros, resultados) {

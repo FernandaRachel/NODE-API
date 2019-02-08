@@ -4,8 +4,8 @@ module.exports = function (app) {
     console.log("ROTA PROMOCOES OK");
 
     app.get("/promocoes/form", function (req, res) {
-        connection = app.infra.connectionFactory();
-        productsDAO = new app.infra.productsDAO(connection);
+        connection = app.db.connectionFactory();
+        productsDAO = new app.db.dao.productsDAO(connection);
 
         productsDAO.get(function (erros, resultados) {
             if (erros) res.send(erros);
